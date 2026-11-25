@@ -17,9 +17,9 @@ class AdminSeeder extends Seeder
     {
         $this->command->info("Start seeding an admin user");
         User::updateOrCreate(
-            ['tel'=>'0123456789'],
+            ['tel'=>'0935740586'],
             [
-                'password' => Hash::make('password'),
+                'password' => Hash::make('thanhanhoi'),
                 'role' => UserRoles::Admin,
                 'name' => 'Thanh An Hội',
                 'created_at' => now(),

@@ -115,6 +115,12 @@ const router = createRouter({
             component: () => import('../js/pages/calendar/index.vue'),
             meta: { requiresAuth: true }
         },
+        {
+            path: '/supplier',
+            name: 'Supplier',
+            component: () => import('../js/pages/Supplier/index.vue'),
+            meta: { requiresAuth: true }
+        },
     ]
 })
 export default router;

@@ -23,6 +23,7 @@ const menuItems = [
   { label: 'Nhân viên', icon: 'heroicons:user-group', route: '/staff' },
   { label: 'Món ăn', icon: 'heroicons:building-storefront', route: '/dish' },
   { label: 'Lịch', icon: 'heroicons:calendar', route: '/calendar' },
+  { label: 'Đại lí', icon: 'heroicons:user-group', route: '/supplier' },
 ]
 const filteredMenuItems = computed(() =>{
   const showForReportViewer = [

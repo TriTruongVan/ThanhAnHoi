@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DishController;
 use App\Http\Controllers\orderController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Middleware\AuthAdminUser;
@@ -78,6 +79,10 @@ Route::middleware(AuthAdminUser::class)->group(function() {
     //dashboard 
     Route::controller(DashboardController::class)->prefix('dashboard')->group(function(){
         Route::get('/Dashboard-Summary','getDashboardSummary')->name('dashboard.summary');
+    });
+
+    Route::controller(SupplierController::class)->prefix('supplier')->group(function(){
+        Route::get('/', 'getAllSupplier')->name('supplier.getAll');
     });
     
 });
