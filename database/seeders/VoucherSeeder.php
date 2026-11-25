@@ -101,10 +101,18 @@ class VoucherSeeder extends Seeder
         ];
 
         foreach ($vouchers as $voucher) {
-            Voucher::updateOrCreate(
-                ['code' => $voucher['code']],
-                array_merge($voucher, ['id' => (string) Str::ulid()])
-            );
+            $voucherModel = Voucher::firstOrNew([
+                'code' => $voucher['code'],
+            ]);
+
+            $voucherModel->fill($voucher);
+
+            // Chỉ tạo ID khi voucher chưa tồn tại
+            if (!$voucherModel->exists) {
+                $voucherModel->id = (string) Str::ulid();
+            }
+
+            $voucherModel->save();
         }
 
         $this->command->info("Finish seeding vouchers");
