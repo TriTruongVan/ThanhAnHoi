@@ -1,7 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { useToast } from 'primevue/usetoast';
 import { onMounted, ref } from 'vue';
-import { getIngredient } from '../../../services/ingredientService'
+import { getIngredient, searchIngredient } from '../../../services/ingredientService'
 import AutoComplete from 'primevue/autocomplete';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -11,11 +11,14 @@ import Button from 'primevue/button';
 const loading = ref(false)
 const toast = useToast()
 const listIngredient = ref([])
+const suggestions = ref([])
+const selectedIngredient = ref(null)
 const sortField = ref("created_at")
 const sortOrder = ref("desc")
 const page = ref(1)
 const rows = ref(20)
 const total = ref(0)
+
 onMounted( async () => {
     await loadData()
 });
@@ -27,7 +30,6 @@ const loadData = async (pageNumber = page.value, pageSize = rows.value) =>{
         const pagination = ingredientResp.data.data
         listIngredient.value = pagination.data
         total.value = pagination.total
-        console.log(listIngredient.value)
     } catch (error) {
         toast.add({
             severity: 'error',
@@ -39,11 +41,24 @@ const loadData = async (pageNumber = page.value, pageSize = rows.value) =>{
         loading.value = false
     }
 }
+
+const onSearch = async (event:any) =>{
+    const search = event.query
+    const searchResp = await searchIngredient(search)
+    suggestions.value = searchResp.data.data.items
+}
+
 const onPageChange = async (event) => {
     page.value = event.page + 1
     rows.value = event.rows
 
     await loadData(page.value, rows.value)
+}
+
+const onIngredientSelect = (event: any) => {
+    const selected = event.value
+
+    listIngredient.value = [selected]
 }
 </script>
 <template>
@@ -94,24 +109,26 @@ const onPageChange = async (event) => {
                         </div>
                         <AutoComplete
                             :suggestions="suggestions"
+                            v-model="selectedIngredient"
+                            @item-select="onIngredientSelect"
                             class="w-full"
-                            input-class="w-full !pl-12 !pr-4 !py-3 !rounded-xl !border-2 !border-gray-200 dark:!border-gray-600 focus:!border-indigo-500 dark:focus:!border-indigo-400 !shadow-sm"
-                            placeholder="Tìm kiếm theo tên..."
+                            @complete="onSearch"
+                            option-label="name"
+                            input-class="w-full !pl-12 !pr-4 !py-3 !rounded-xl !border-2 !border-gray-200 dark:!border-gray-600 focus:!border-indigo-500 dark:focus:!border-indigo-400 focus:!ring-4 focus:!ring-indigo-500/10 !shadow-sm"
+                            placeholder="Tìm kiếm nguyên liệu theo tên..."
                         >
                             <template #option="{ option }">
                                 <div
-                                    class="p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                                    class="flex items-center justify-between gap-3 px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
                                 >
-                                    <div
-                                        class="font-medium text-gray-900 dark:text-white"
-                                    >
+                                    <span class="font-medium text-gray-900 dark:text-white truncate">
                                         {{ option.name }}
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-300 mt-1"
+                                    </span>
+                                    <span
+                                        class="px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-300 flex-shrink-0"
                                     >
-                                        {{ option.unit }}
-                                    </div>
+                                        {{ option.unit || '-' }}
+                                    </span>
                                 </div>
                             </template>
                         </AutoComplete>
@@ -137,12 +154,12 @@ const onPageChange = async (event) => {
                                 <h2
                                     class="text-lg font-semibold text-gray-900 dark:text-white"
                                 >
-                                    Danh sách Nhà cung cấp
+                                    Danh sách nguyên liệu
                                 </h2>
                                 <p
                                     class="text-sm text-gray-500 dark:text-gray-400"
                                 >
-                                    2 nhà cung cấp trong hệ thống
+                                    {{ total }} nguyên liệu trong hệ thống
                                 </p>
                             </div>
                         </div>
@@ -189,7 +206,7 @@ const onPageChange = async (event) => {
 
                         <Column
                             field="name"
-                            header="Tên nhà cung cấp"
+                            header="Tên nguyên liệu"
                             :sortable="true"
                             style="min-width: 300px"
                         >

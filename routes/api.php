@@ -88,6 +88,7 @@ Route::middleware(AuthAdminUser::class)->group(function() {
 
     Route::controller(IngredientController::class)->prefix('ingredient')->group(function(){
         Route::get('/', 'getAllIngredient')->name('ingredient.getAll');
+        Route::get('/search', 'searchIngredient')->name('ingredient.search');
     });
     
 });
