@@ -42,11 +42,18 @@ class IngredientController extends Controller
         $ingredient = $query->paginate($request->size);
 
         // 6. Định dạng và trả response
-        return $this->okRes(
-            PaginateResource::make(
-                $ingredient,
-                IngredientResource::class
-            )
+        return $this->okRes(PaginateResource::make($ingredient,IngredientResource::class)
         );
+    }
+
+    public function searchIngredient(Request $request)
+    {
+        $search = $request->search;
+        $query = Ingredient::query();
+        $query->where("name", "LIKE", "%{$search}%");
+
+        $items = $query->get(["id", "name", "unit"]);
+
+        return $this->okRes(compact("items"));
     }
 }
