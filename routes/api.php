@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthenticatedController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DishController;
+use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\orderController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SupplierController;
@@ -83,6 +84,10 @@ Route::middleware(AuthAdminUser::class)->group(function() {
 
     Route::controller(SupplierController::class)->prefix('supplier')->group(function(){
         Route::get('/', 'getAllSupplier')->name('supplier.getAll');
+    });
+
+    Route::controller(IngredientController::class)->prefix('ingredient')->group(function(){
+        Route::get('/', 'getAllIngredient')->name('ingredient.getAll');
     });
     
 });
