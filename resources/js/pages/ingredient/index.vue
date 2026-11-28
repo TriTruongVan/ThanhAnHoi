@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useToast } from 'primevue/usetoast';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { getIngredient, searchIngredient } from '../../../services/ingredientService'
 import AutoComplete from 'primevue/autocomplete';
 import DataTable from 'primevue/datatable';
@@ -60,6 +60,13 @@ const onIngredientSelect = (event: any) => {
 
     listIngredient.value = [selected]
 }
+
+watch(selectedIngredient ,async (newValue) => {
+    if(!newValue) {
+        page.value = 1
+        await loadData(1, rows.value)
+    }
+})
 </script>
 <template>
     <div
