@@ -24,6 +24,7 @@ const menuItems = [
   { label: 'Món ăn', icon: 'heroicons:building-storefront', route: '/dish' },
   { label: 'Lịch', icon: 'heroicons:calendar', route: '/calendar' },
   { label: 'Đại lí', icon: 'heroicons:user-group', route: '/supplier' },
+  { label: 'Nguyên liệu', icon: 'heroicons:lifebuoy', route: '/ingredient' },
 ]
 const filteredMenuItems = computed(() =>{
   const showForReportViewer = [
@@ -34,7 +35,6 @@ const filteredMenuItems = computed(() =>{
     if (currentUser.value?.role === USER_ROLES.REPORT_VIEWER) {
       return showForReportViewer.includes(item.label)
     }
-
     return true
   })
 })

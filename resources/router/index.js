@@ -121,6 +121,12 @@ const router = createRouter({
             component: () => import('../js/pages/Supplier/index.vue'),
             meta: { requiresAuth: true }
         },
+        {
+            path: '/ingredient',
+            name: 'Ingredient',
+            component: () => import('../js/pages/ingredient/index.vue'),
+            meta: { requiresAuth: true }
+        },
     ]
 })
 export default router;
