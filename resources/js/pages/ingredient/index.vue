@@ -61,7 +61,7 @@ const onPageChange = async (event) => {
                             <div
                                 class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg"
                             >
-                                <i class="pi pi-truck text-white text-xl"></i>
+                                <i class="pi pi-box text-white text-xl"></i>
                             </div>
                             <div>
                                 <h1
@@ -199,7 +199,7 @@ const onPageChange = async (event) => {
                                         class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-md flex-shrink-0"
                                     >
                                         <i
-                                            class="pi pi-building text-white text-base"
+                                            class="pi pi-tag text-white text-base"
                                         ></i>
                                     </div>
                                     <div class="flex-1 min-w-0">
@@ -226,7 +226,7 @@ const onPageChange = async (event) => {
                                             class="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0"
                                         >
                                             <i
-                                                class="pi pi-phone text-green-600 dark:text-green-400 text-sm"
+                                                class="pi pi-sliders-h text-green-600 dark:text-green-400 text-sm"
                                             ></i>
                                         </div>
                                         <span
